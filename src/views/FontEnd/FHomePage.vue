@@ -1,12 +1,9 @@
 <template>
 <div>
-  博文内容
+  <p>博文内容</p>
 </div>
 </template>
 <script>
-export default({
-  name: 'FrontEnd',
-  // Add your component options here
-});
+
 </script>
 
