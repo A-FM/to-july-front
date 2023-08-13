@@ -1,6 +1,5 @@
 <template>
-
-  <router-view></router-view>
+  <router-view name="fontEnd"/>
 </template>
 
 <script>
