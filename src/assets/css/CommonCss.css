@@ -104,5 +104,6 @@ html, body {
 }
 
 .blog_card {
-    text-align: left
+    text-align: left;
+    height: 150px;
 }

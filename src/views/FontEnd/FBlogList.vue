@@ -21,8 +21,7 @@
                  @currentChange="handlerCurrentChange" @sizeChange="handlerSizeChange" :page-sizes="[10,20,30,40]"/>
 </template>
 <script>
-import axios from "axios";
-
+import axios from "@/axios/axios";
 export default {
   data() {
     return {
