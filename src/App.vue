@@ -1,5 +1,5 @@
 <template>
-  <router-view name="fontEnd"/>
+  <router-view name="frontEnd"/>
 </template>
 
 <script>

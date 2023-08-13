@@ -5,10 +5,10 @@ import FBlogList from "@/views/FontEnd/FBlogList.vue";
 
 const routes = [
     {
-        path: "",
+        path: "/",  // 将路径改为 /index
         name: "index",
         components: {
-            fontEnd: FrontEnd,
+            frontEnd: FrontEnd,
         },
         children: [
             {

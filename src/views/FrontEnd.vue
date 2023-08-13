@@ -5,7 +5,6 @@
     </el-header>
     <el-main>
       <router-view class="font-end-content" name="fHomePage"/>
-      <router-view class="font-end-content" name="fBlogContent"/>
     </el-main>
     <el-footer>
       <f-footer class="footer-border"/>
