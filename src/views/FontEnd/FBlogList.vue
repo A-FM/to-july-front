@@ -3,32 +3,37 @@
     <el-card shadow="always" class="box-card">
       <el-row>
         <el-col :span="6">
-          <img
-              src="https://tendcode.com//media/article/upload/2023/07/10/chatgpt.png"
-              style="width: 100%"
-          /></el-col>
+          <router-link :to="{ name: 'fBlogContent', params: { id: post.id } }">
+            <img
+                src="https://tendcode.com//media/article/upload/2023/07/10/chatgpt.png"
+                style="width: 100%"
+                alt=""/>
+          </router-link>
+        </el-col>
         <el-col :span="1"></el-col>
         <el-col :span="17">
           <div class="blog_card">
-            <a href="https://baidu.com">{{ post.title }}</a>
-
+            <router-link :to="{ name: 'fBlogContent', params: { id: post.id } }">
+              <h3>{{ post.title }}</h3>
+            </router-link>
           </div>
         </el-col>
       </el-row>
     </el-card>
   </div>
   <el-pagination background layout="sizes, prev, pager, next, jumper" :total="queryInfo.total" class="div-center"
-                 @currentChange="handlerCurrentChange" @sizeChange="handlerSizeChange" :page-sizes="[10,20,30,40]"/>
+                 @currentChange="handlerCurrentChange" @sizeChange="handlerSizeChange" :page-sizes="[10,20,30,40]" :default-page-size="this.queryInfo.pageSize" :default-current-page="this.queryInfo.currentPage"/>
 </template>
 <script>
 import axios from "@/axios/axios";
+
 export default {
   data() {
     return {
       queryInfo: {
         total: 23,
-        pageSize: 10,
-        currentPage: 1,
+        pageSize: localStorage.getItem('fPageSize') !=null ?JSON.parse(localStorage.getItem('fPageSize')):10,
+        currentPage: localStorage.getItem('fCurrentPage') !=null ?JSON.parse(localStorage.getItem('fCurrentPage')):1,
         blogList: [],
       },
       blogList: [],
@@ -55,6 +60,7 @@ export default {
     handlerCurrentChange(newPage) {
       this.queryInfo.currentPage = newPage;
       this.fetchData();
+      localStorage.setItem('fCurrentPage', JSON.stringify(newPage));
     },
     handlerSizeChange(newSize) {
       this.queryInfo.pageSize = newSize;

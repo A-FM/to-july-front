@@ -31,7 +31,7 @@ export const router = createRouter({
                     ],
                 },
                 {
-                    path: "blog",
+                    path: "blog/:id",
                     name: "fBlogContent",
                     components: {
                         fHomePage: FBlogContent,
