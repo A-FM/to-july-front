@@ -14,8 +14,10 @@
         <el-col :span="17">
           <div class="blog_card">
             <router-link :to="{ name: 'fBlogContent', params: { id: post.id } }">
-              <h3>{{ post.title }}</h3>
+              <el-link type="primary"><el-text size="large">{{ post.title }}</el-text></el-link>
             </router-link>
+            <hr/>
+            <el-text size="default">{{post.content}}</el-text>
           </div>
         </el-col>
       </el-row>

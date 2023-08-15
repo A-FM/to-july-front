@@ -36,14 +36,6 @@
     backdrop-filter: blur(12px);
 }
 
-.dark {
-    --text-color: #fff;
-}
-
-.dark * {
-    color: var(--text-color);
-}
-
 .logo {
     font-weight: bold;
     text-shadow: 0 10px 10px rgba(255, 177, 255, 0.7);
@@ -64,7 +56,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
 }
 
 html, body {
@@ -107,3 +98,12 @@ html, body {
     text-align: left;
     height: 150px;
 }
+
+a.no-underline {
+    text-decoration: none;
+}
+
+.inherit-font-size{
+    font-size: inherit;
+}
+
