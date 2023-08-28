@@ -1,15 +1,15 @@
 <template>
   <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
+      :default-active="menuActiveIndex"
+      class="el-menu-demo header-border"
       mode="horizontal"
       :ellipsis="false"
+      :router="true"
       @select="handleSelect"
   >
-
-    <el-menu-item index="0"><p class="logo ">X-POWER</p></el-menu-item>
+    <el-menu-item index="logo"><p class="logo ">X-POWER</p></el-menu-item>
     <div class="flex-grow"/>
-    <el-menu-item index="1">
+    <el-menu-item index="/">
       <el-icon>
         <HomeFilled/>
       </el-icon>
@@ -40,7 +40,7 @@
       </el-icon>
       <p class="menu-font-size">关于</p></el-menu-item>
     <div class="flex-grow"/>
-    <el-menu-item index="7">
+    <el-menu-item index="">
       <el-switch
           v-model="themesDarkValue"
           size="large"
@@ -50,35 +50,58 @@
       />
     </el-menu-item>
     <el-input
-        v-model="input1"
+        v-model="searchContent"
         class="w-50 m-2 input-search"
         size="large"
         placeholder="Please Input"
         :suffix-icon="Search"
     />
-    <el-sub-menu index="9">
+    <el-sub-menu index="">
       <template #title>
         <el-avatar
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         />
       </template>
-      <el-menu-item index="2-1">item one</el-menu-item>
-      <el-menu-item index="2-2">item two</el-menu-item>
-      <el-menu-item index="2-3">item three</el-menu-item>
-      <el-sub-menu index="2-4">
-        <template #title>item four</template>
-        <el-menu-item index="2-4-1">item one</el-menu-item>
-        <el-menu-item index="2-4-2">item two</el-menu-item>
-        <el-menu-item index="2-4-3">item three</el-menu-item>
-      </el-sub-menu>
+      <el-menu-item @click="loginButton">Login</el-menu-item>
     </el-sub-menu>
   </el-menu>
+  <el-dialog v-model="showLoginDialog" :show-close="false" title="Login" width="30%" draggable>
+    <el-form
+        ref="formRef"
+        :model="loginForm"
+        label-width="100px"
+        class="demo-ruleForm"
+    >
+      <el-form-item label="Username" prop="Username">
+        <el-input v-model="loginForm.username" type="email" clearable/>
+      </el-form-item>
+      <el-form-item label="Password" prop="password">
+        <el-input v-model="loginForm.password" type="password" show-password clearable/>
+      </el-form-item>
+      <el-form-item label="verifyCode" prop="verifyCode">
+        <el-row style="width: 100%">
+          <el-col :span="16">
+            <el-input v-model="loginForm.verifyCode" show-password clearable/>
+          </el-col>
+          <el-col :span="8" style="text-align: right;">
+            <el-image :src="codeUrl" @click="getCode" style="height: 30px"/>
+          </el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item label="uuidTime" prop="uuidTime" v-show="false">
+        <el-input v-model="loginForm.uuidTime"/>
+      </el-form-item>
+        <el-button type="primary" @click="submitButton">Submit</el-button>
+        <el-button @click="this.showLoginDialog=!this.showLoginDialog">Cancel</el-button>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script>
 
 import {Aim, Connection, Hide, HomeFilled, InfoFilled, Memo, Search, Tools, View} from "@element-plus/icons-vue";
 import {useDark, useToggle} from "@vueuse/core";
+import {getCaptcha, login} from "@/axios/api";
 
 const isDark = useDark()
 export default {
@@ -97,22 +120,53 @@ export default {
   components: {InfoFilled, Connection, Tools, Memo, Aim, HomeFilled},
   data() {
     return {
-      themesDarkValue: localStorage.getItem('themesDarkValue') !== null ? JSON.parse(localStorage.getItem('themesDarkValue')):false// 默认暗黑状态
+      codeUrl: "",
+      loginForm: {
+        username: "",
+        password: "",
+        verifyCode: "",
+        uuidTime: ""
+      },
+      showLoginDialog: false,
+      menuActiveIndex: "1",
+      searchContent: "",
+      themesDarkValue: localStorage.getItem('themesDarkValue') !== null ? JSON.parse(localStorage.getItem('themesDarkValue')) : false// 默认暗黑状态
     }
   },
   created() {
 
   },
+  mounted() {
+
+  },
   methods: {
-    handleSwitchThemesChange(value) {
-      if (value) {
-        const toggleDark = useToggle(isDark)
-        toggleDark()
-      } else {
-        const toggleDark = useToggle(isDark)
-        toggleDark()
-      }
-      localStorage.setItem('themesDarkValue', JSON.stringify(value));
+    getCode() {
+      getCaptcha().then(response => {
+        console.log(response)
+        this.codeUrl = response.data.object.pic
+        this.loginForm.uuidTime = response.data.object.uuidTime
+      })
+    },
+    handleSelect() {
+
+    },
+    loginButton(){
+      this.showLoginDialog = !this.showLoginDialog
+      this.$message.success("cececececec")
+      this.getCode()
+    },
+    submitButton() {
+      this.$message.success("登录")
+      login(this.loginForm).then(response=>{
+        console.log(response)
+      }).catch(error=>{
+        console.log(error)
+      })
+    },
+    handleSwitchThemesChange(newValue) {
+      const toggleDark = useToggle(isDark);
+      toggleDark();
+      localStorage.setItem('themesDarkValue', JSON.stringify(newValue));
     }
   }
 }

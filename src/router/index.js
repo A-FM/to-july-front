@@ -8,7 +8,7 @@ export const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: "",  // 修改路径为 /index
+            path: "/",  // 修改路径为 /index
             name: "index",
             components: {
                 frontEnd: FrontEnd,
@@ -31,7 +31,7 @@ export const router = createRouter({
                     ],
                 },
                 {
-                    path: "blog/:id",
+                    path: "/blog/:id",
                     name: "fBlogContent",
                     components: {
                         fHomePage: FBlogContent,

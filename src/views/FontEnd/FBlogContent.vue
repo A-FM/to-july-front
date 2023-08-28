@@ -1,26 +1,52 @@
 <template>
-  <h1>{{blogPost.id}}</h1>
+  <h1>{{blogPost.content}}</h1>
+  <div class="login-code">
+    <img :src="codeUrl" @click="getCode">
+  </div>
 </template>
 <script>
+import {getBlogContentById, getCaptcha} from "@/axios/api";
+
 export default {
   data() {
     return {
+      codeUrl:"",
       blogPost: {
-        id: null,
+        id: '',
         title: '',
-        content: ''
+        imgUrl: '',
+        content: '',
+        blogView: '',
+        createTime: '',
+        updateTime: ''
       }
     };
   },
   created() {
-    // 获取路由参数中的博文ID
-    const postId = this.$route.params.id;
-
-    // 根据博文ID从后端或其他数据源获取博文内容
-    // 示例中直接使用硬编码数据
     this.blogPost = {
-      id: postId,
+      id: this.$route.params.id,
     };
+  },
+  mounted() {
+    this.getContent()
+    this.getCode()
+  },
+  methods: {
+    getCode() {
+      getCaptcha().then(response => {
+        console.log(response)
+        this.codeUrl = response.data.object.pic
+      })
+    },
+    getContent(){
+      getBlogContentById({
+        id: this.blogPost.id
+      }).then((response)=>{
+        this.blogPost = response.data.object
+      }).catch(error=>{
+        this.$notify.error({title:"获取数据失败~",message:error})
+      })
+    }
   }
 };
 </script>

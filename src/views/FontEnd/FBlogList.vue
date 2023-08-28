@@ -27,7 +27,7 @@
                  @currentChange="handlerCurrentChange" @sizeChange="handlerSizeChange" :page-sizes="[10,20,30,40]" :default-page-size="this.queryInfo.pageSize" :default-current-page="this.queryInfo.currentPage"/>
 </template>
 <script>
-import axios from "@/axios/axios";
+import {getBlogList} from "@/axios/api";
 
 export default {
   data() {
@@ -40,24 +40,25 @@ export default {
       },
       blogList: [],
     };
-
   },
   mounted() {
     this.fetchData();
   },
   methods: {
     fetchData() {
-      const apiUrl = `page/${this.queryInfo.currentPage}/${this.queryInfo.pageSize}`;
-      axios.get(apiUrl).then(response => {
+      getBlogList({
+        pageSize: this.queryInfo.pageSize,
+        pageNum: this.queryInfo.currentPage
+      }).then(response=>{
         const responseData = response.data.object;
         this.queryInfo.blogContent = responseData.list;
         this.queryInfo.total = responseData.total;
         this.queryInfo.pageSize = responseData.pageSize;
         this.queryInfo.currentPage = responseData.pageNum;
         this.blogList = responseData.list;
-      }).catch(error => {
-        console.log("获取博客文章列表失败:", error);
-      });
+      }).catch(error=>{
+        this.$notify.error({title:"获取数据失败~",message:error})
+      })
     },
     handlerCurrentChange(newPage) {
       this.queryInfo.currentPage = newPage;

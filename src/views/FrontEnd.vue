@@ -1,13 +1,13 @@
 <template>
   <el-container>
     <el-header>
-      <f-header class="header-border"/>
+      <f-header/>
     </el-header>
     <el-main>
       <router-view class="font-end-content" name="fHomePage"/>
     </el-main>
     <el-footer>
-      <f-footer class="footer-border"/>
+      <f-footer/>
     </el-footer>
   </el-container>
 </template>
