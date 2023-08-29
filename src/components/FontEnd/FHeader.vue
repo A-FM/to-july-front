@@ -160,6 +160,7 @@ export default {
       logout().then(response => {
         this.$message.success("登出成功~");
         // localStorage.removeItem("token")
+        this.loginAble=true
         console.log(response)
       }).catch(error => {
         this.$message.error("出现错误~：" + error)
@@ -168,6 +169,7 @@ export default {
     submitButton() {
       login(this.loginForm).then(response => {
         localStorage.setItem("token", response.headers.token)
+        this.loginAble=false
       }).catch(error => {
         this.$message.error("登录失败，具体信息如下" + error)
       })
