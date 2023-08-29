@@ -5,7 +5,6 @@
       mode="horizontal"
       :ellipsis="false"
       :router="true"
-      @select="handleSelect"
   >
     <el-menu-item index="logo"><p class="logo ">X-POWER</p></el-menu-item>
     <div class="flex-grow"/>
@@ -62,7 +61,8 @@
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         />
       </template>
-      <el-menu-item @click="loginButton">Login</el-menu-item>
+      <el-menu-item @click="loginButton" v-show="loginAble">Login</el-menu-item>
+      <el-menu-item @click="logoutButton" v-show="!loginAble">Login Out</el-menu-item>
     </el-sub-menu>
   </el-menu>
   <el-dialog v-model="showLoginDialog" :show-close="false" title="Login" width="30%" draggable>
@@ -91,8 +91,8 @@
       <el-form-item label="uuidTime" prop="uuidTime" v-show="false">
         <el-input v-model="loginForm.uuidTime"/>
       </el-form-item>
-        <el-button type="primary" @click="submitButton">Submit</el-button>
-        <el-button @click="this.showLoginDialog=!this.showLoginDialog">Cancel</el-button>
+      <el-button type="primary" @click="submitButton">Submit</el-button>
+      <el-button @click="this.showLoginDialog=!this.showLoginDialog">Cancel</el-button>
     </el-form>
   </el-dialog>
 </template>
@@ -101,12 +101,15 @@
 
 import {Aim, Connection, Hide, HomeFilled, InfoFilled, Memo, Search, Tools, View} from "@element-plus/icons-vue";
 import {useDark, useToggle} from "@vueuse/core";
-import {getCaptcha, login} from "@/axios/api";
+import {getCaptcha, login, logout} from "@/axios/api";
 
 const isDark = useDark()
 export default {
   name: 'SwitchThemes',
   computed: {
+    InfoFilled() {
+      return InfoFilled
+    },
     Search() {
       return Search
     },
@@ -120,6 +123,7 @@ export default {
   components: {InfoFilled, Connection, Tools, Memo, Aim, HomeFilled},
   data() {
     return {
+      loginAble: true,
       codeUrl: "",
       loginForm: {
         username: "",
@@ -137,30 +141,35 @@ export default {
 
   },
   mounted() {
-
+    this.loginAble = localStorage.getItem("token") === null
   },
   methods: {
     getCode() {
       getCaptcha().then(response => {
-        console.log(response)
         this.codeUrl = response.data.object.pic
         this.loginForm.uuidTime = response.data.object.uuidTime
+      }).catch(error => {
+        this.$message.error("获取验证码失败:" + error)
       })
     },
-    handleSelect() {
-
-    },
-    loginButton(){
+    loginButton() {
       this.showLoginDialog = !this.showLoginDialog
-      this.$message.success("cececececec")
       this.getCode()
     },
-    submitButton() {
-      this.$message.success("登录")
-      login(this.loginForm).then(response=>{
+    logoutButton() {
+      logout().then(response => {
+        this.$message.success("登出成功~");
+        // localStorage.removeItem("token")
         console.log(response)
-      }).catch(error=>{
-        console.log(error)
+      }).catch(error => {
+        this.$message.error("出现错误~：" + error)
+      })
+    },
+    submitButton() {
+      login(this.loginForm).then(response => {
+        localStorage.setItem("token", response.headers.token)
+      }).catch(error => {
+        this.$message.error("登录失败，具体信息如下" + error)
       })
     },
     handleSwitchThemesChange(newValue) {

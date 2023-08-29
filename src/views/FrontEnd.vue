@@ -11,8 +11,6 @@
     </el-footer>
   </el-container>
 </template>
-
-
 <script>
 import FHeader from "@/components/FontEnd/FHeader.vue";
 import FFooter from "@/components/FontEnd/FFooter.vue";

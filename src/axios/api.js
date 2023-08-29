@@ -24,6 +24,13 @@ export function login(params){
     })
 }
 
+export function logout(){
+    return request({
+        url: "/backend/logout",
+        method: "POST",
+    })
+}
+
 export function getCaptcha(){
     return request({
         url: "/getCaptcha",

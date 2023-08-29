@@ -1,8 +1,5 @@
 <template>
   <h1>{{blogPost.content}}</h1>
-  <div class="login-code">
-    <img :src="codeUrl" @click="getCode">
-  </div>
 </template>
 <script>
 import {getBlogContentById, getCaptcha} from "@/axios/api";

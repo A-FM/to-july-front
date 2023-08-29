@@ -9,7 +9,7 @@ instance.interceptors.request.use(config => {
     config.xsrfCookieName = "CSRF-TOKEN"
     config.xsrfHeaderName = "X-CSRF-TOKEN"
     config.withCredentials = true
-
+    config.headers.setAuthorization(localStorage.getItem("token"))
 
     config.onUploadProgress = function (progressEvent) {
         console.log("onUploadProgress")
