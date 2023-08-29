@@ -6,23 +6,23 @@
       :ellipsis="false"
       :router="true"
   >
-    <el-menu-item index="/"><p class="logo ">X-POWER</p></el-menu-item>
+    <el-menu-item index="logo"><p class="logo ">X-POWER</p></el-menu-item>
     <div class="flex-grow"/>
     <el-menu-item index="/">
       <el-icon>
-        <HomeFilled/>
+        <TrendCharts/>
       </el-icon>
-      <p class="menu-font-size">首页</p></el-menu-item>
-    <el-menu-item index="2">
+      <p class="menu-font-size">仪表盘</p></el-menu-item>
+    <el-menu-item index="/backend/blogList">
       <el-icon>
-        <Aim/>
+        <Document/>
       </el-icon>
-      <p class="menu-font-size">专题</p></el-menu-item>
+      <p class="menu-font-size">博文</p></el-menu-item>
     <el-menu-item index="3">
       <el-icon>
         <Memo/>
       </el-icon>
-      <p class="menu-font-size">归档</p></el-menu-item>
+      <p class="menu-font-size">分类</p></el-menu-item>
     <el-menu-item index="4">
       <el-icon>
         <Tools/>
@@ -99,7 +99,17 @@
 
 <script>
 
-import {Aim, Connection, Hide, HomeFilled, InfoFilled, Memo, Search, Tools, View} from "@element-plus/icons-vue";
+import {
+  Document,
+  Connection,
+  Hide,
+  InfoFilled,
+  Memo,
+  TrendCharts,
+  Search,
+  Tools,
+  View
+} from "@element-plus/icons-vue";
 import {useDark, useToggle} from "@vueuse/core";
 import {getCaptcha, login, logout} from "@/axios/api";
 
@@ -120,7 +130,7 @@ export default {
       return View
     }
   },
-  components: {InfoFilled, Connection, Tools, Memo, Aim, HomeFilled},
+  components: {TrendCharts, InfoFilled, Connection, Tools, Memo, Document},
   data() {
     return {
       loginAble: true,

@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 import FrontEnd from "@/views/FrontEnd.vue";
 import FHomePage from "@/views/FontEnd/FHomePage.vue";
 import FBlogList from "@/views/FontEnd/FBlogList.vue";
 import FBlogContent from "@/views/FontEnd/FBlogContent.vue";
+import BackEnd from "@/views/BackEnd.vue";
+import BlogList from "@/views/BackEnd/BlogList.vue";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -11,7 +13,7 @@ export const router = createRouter({
             path: "/",  // 修改路径为 /index
             name: "index",
             components: {
-                frontEnd: FrontEnd,
+                default: FrontEnd,
             },
             children: [
                 {
@@ -39,5 +41,19 @@ export const router = createRouter({
                 }
             ],
         },
+        {
+            path: "/backend",
+            name: "backend",
+            components: {
+                default: BackEnd,
+            },
+            children: [{
+                path: "blogList",
+                name: "blogList",
+                components: {
+                    fHomePage: BlogList,
+                }
+            }]
+        }
     ],
 })

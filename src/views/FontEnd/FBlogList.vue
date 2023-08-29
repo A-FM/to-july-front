@@ -1,6 +1,6 @@
 <template>
   <div v-for="post in blogList" :key="post.id">
-    <el-card shadow="always" class="box-card">
+    <el-card shadow="hover" class="box-card">
       <el-row>
         <el-col :span="6">
           <router-link :to="{ name: 'fBlogContent', params: { id: post.id } }">
