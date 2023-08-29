@@ -1,6 +1,11 @@
 import axios from 'axios';
-
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css'; // 导入进度条样式
 const instance = axios.create();
+
+NProgress.configure({
+    showSpinner: false // 禁用加载指示器
+});
 
 instance.interceptors.request.use(config => {
     config.url = `/server/${config.url}`;
@@ -14,12 +19,22 @@ instance.interceptors.request.use(config => {
     config.onUploadProgress = function (progressEvent) {
         console.log("onUploadProgress")
         console.log(progressEvent)
+        NProgress.set(progressEvent.progress)
     };
     config.onDownloadProgress = function (progressEvent) {
         console.log("onDownloadProgress")
         console.log(progressEvent)
+        NProgress.set(progressEvent.progress)
     }
+    NProgress.start()
     return config;
+});
+instance.interceptors.response.use(response=>{
+    NProgress.done();
+    return response
+}, error => {
+    NProgress.done(); // 请求失败时停止进度条
+    throw error;
 });
 
 export default instance;

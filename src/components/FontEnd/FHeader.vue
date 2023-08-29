@@ -170,6 +170,8 @@ export default {
       login(this.loginForm).then(response => {
         localStorage.setItem("token", response.headers.token)
         this.loginAble=false
+        this.showLoginDialog=false;
+        this.$message.success("登录成功~")
       }).catch(error => {
         this.$message.error("登录失败，具体信息如下" + error)
       })
