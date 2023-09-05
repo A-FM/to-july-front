@@ -4,7 +4,7 @@
       <b-header/>
     </el-header>
     <el-main>
-      <router-view class="font-end-content" name="fHomePage"/>
+      <router-view class="font-end-content"/>
     </el-main>
     <el-footer>
       <CommonFooter/>

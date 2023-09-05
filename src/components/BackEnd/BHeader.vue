@@ -8,7 +8,7 @@
   >
     <el-menu-item index="logo"><p class="logo ">X-POWER</p></el-menu-item>
     <div class="flex-grow"/>
-    <el-menu-item index="/">
+    <el-menu-item index="/backend">
       <el-icon>
         <TrendCharts/>
       </el-icon>
@@ -44,8 +44,6 @@
           v-model="themesDarkValue"
           size="large"
           @change="handleSwitchThemesChange"
-          :active-action-icon="View"
-          :inactive-action-icon="Hide"
       />
     </el-menu-item>
     <el-input
@@ -112,6 +110,7 @@ import {
 } from "@element-plus/icons-vue";
 import {useDark, useToggle} from "@vueuse/core";
 import {getCaptcha, login, logout} from "@/axios/api";
+import {getElementUIThemeState} from "@/assets/css/CommonJs";
 
 const isDark = useDark()
 export default {
@@ -142,9 +141,9 @@ export default {
         uuidTime: ""
       },
       showLoginDialog: false,
-      menuActiveIndex: "/",
+      menuActiveIndex: "/backend/blogList",
       searchContent: "",
-      themesDarkValue: localStorage.getItem('themesDarkValue') !== null ? JSON.parse(localStorage.getItem('themesDarkValue')) : false// 默认暗黑状态
+      themesDarkValue: true// 默认暗黑状态
     }
   },
   created() {
@@ -152,6 +151,7 @@ export default {
   },
   mounted() {
     this.loginAble = localStorage.getItem("token") === null
+    this.themesDarkValue = getElementUIThemeState()
   },
   methods: {
     getCode() {
@@ -186,10 +186,9 @@ export default {
         this.$message.error("登录失败，具体信息如下" + error)
       })
     },
-    handleSwitchThemesChange(newValue) {
+    handleSwitchThemesChange() {
       const toggleDark = useToggle(isDark);
       toggleDark();
-      localStorage.setItem('themesDarkValue', JSON.stringify(newValue));
     }
   }
 }

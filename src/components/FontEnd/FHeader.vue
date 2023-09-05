@@ -44,8 +44,6 @@
           v-model="themesDarkValue"
           size="large"
           @change="handleSwitchThemesChange"
-          :active-action-icon="View"
-          :inactive-action-icon="Hide"
       />
     </el-menu-item>
     <el-input
@@ -102,6 +100,7 @@
 import {Aim, Connection, Hide, HomeFilled, InfoFilled, Memo, Search, Tools, View} from "@element-plus/icons-vue";
 import {useDark, useToggle} from "@vueuse/core";
 import {getCaptcha, login, logout} from "@/axios/api";
+import {getElementUIThemeState} from "@/assets/css/CommonJs";
 
 const isDark = useDark()
 export default {
@@ -134,7 +133,7 @@ export default {
       showLoginDialog: false,
       menuActiveIndex: "/",
       searchContent: "",
-      themesDarkValue: localStorage.getItem('themesDarkValue') !== null ? JSON.parse(localStorage.getItem('themesDarkValue')) : false// 默认暗黑状态
+      themesDarkValue: getElementUIThemeState()// 默认暗黑状态
     }
   },
   created() {
@@ -176,10 +175,9 @@ export default {
         this.$message.error("登录失败，具体信息如下" + error)
       })
     },
-    handleSwitchThemesChange(newValue) {
+    handleSwitchThemesChange() {
       const toggleDark = useToggle(isDark);
       toggleDark();
-      localStorage.setItem('themesDarkValue', JSON.stringify(newValue));
     }
   }
 }

@@ -17,13 +17,9 @@ instance.interceptors.request.use(config => {
     config.headers.setAuthorization(localStorage.getItem("token"))
 
     config.onUploadProgress = function (progressEvent) {
-        console.log("onUploadProgress")
-        console.log(progressEvent)
         NProgress.set(progressEvent.progress)
     };
     config.onDownloadProgress = function (progressEvent) {
-        console.log("onDownloadProgress")
-        console.log(progressEvent)
         NProgress.set(progressEvent.progress)
     }
     NProgress.start()

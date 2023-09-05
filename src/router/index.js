@@ -5,6 +5,7 @@ import FBlogList from "@/views/FontEnd/FBlogList.vue";
 import FBlogContent from "@/views/FontEnd/FBlogContent.vue";
 import BackEnd from "@/views/BackEnd.vue";
 import BlogList from "@/views/BackEnd/BlogList.vue";
+import blogContentEdit from "@/views/BackEnd/blogContentEdit.vue";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -33,7 +34,7 @@ export const router = createRouter({
                     ],
                 },
                 {
-                    path: "/blog/:id",
+                    path: "blog/:id",
                     name: "fBlogContent",
                     components: {
                         fHomePage: FBlogContent,
@@ -47,13 +48,22 @@ export const router = createRouter({
             components: {
                 default: BackEnd,
             },
-            children: [{
-                path: "blogList",
-                name: "blogList",
-                components: {
-                    fHomePage: BlogList,
+            children: [
+                {
+                    path: "blogList",
+                    name: "blogList",
+                    components: {
+                        default: BlogList,
+                    }
+                },
+                {
+                    path: "blogContentEdit/:id",
+                    name: "blogContentEdit",
+                    components: {
+                        default: blogContentEdit,
+                    }
                 }
-            }]
+            ]
         }
     ],
 })

@@ -1,3 +1,21 @@
+html.dark{
+    --vxe-font-color: --el-text-color-primary;
+    --vxe-table-header-font-color: --el-text-color-primary;
+    --vxe-primary-color: #2C7ECF;
+    --vxe-icon-background-color: #98989E;
+    --vxe-table-font-color: #98989E;
+    --vxe-table-resizable-color: #95969a;
+    --vxe-table-header-background-color: #28282A;
+    --vxe-pager-background-color: var(--vxe-table-header-background-color);
+    --vxe-table-body-background-color: #151518;
+    --vxe-table-background-color: #4a5663;
+    --vxe-table-border-width: 1px;
+    --vxe-table-border-color: #37373A;
+    --vxe-input-background-color: --el-input-bg-color;
+    --vxe-select-panel-background-color: --el-input-bg-color;
+    --vxe-loading-background-color:--vxe-loading-background-color;
+    --vxe-table-row-hover-background-color: rgba(245, 247, 250, 0.05);
+}
 .el-header {
     --el-header-padding: 0;
     --el-header-height: 60px;
