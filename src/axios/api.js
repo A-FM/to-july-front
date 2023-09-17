@@ -37,3 +37,18 @@ export function getCaptcha(){
         method: "GET",
     })
 }
+
+export function getCategoryList(){
+    return request({
+        url: "/getCategoryList",
+        method: "GET",
+    })
+}
+
+export function getCategoryListByBlogId(params){
+    return request({
+        url: "/getCategoryByBlogId",
+        method: "GET",
+        params:params
+    })
+}
