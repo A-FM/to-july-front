@@ -100,13 +100,10 @@
 import {
   Document,
   Connection,
-  Hide,
   InfoFilled,
   Memo,
   TrendCharts,
-  Search,
-  Tools,
-  View
+  Tools
 } from "@element-plus/icons-vue";
 import {useDark, useToggle} from "@vueuse/core";
 import {getCaptcha, login, logout} from "@/axios/api";
@@ -115,20 +112,6 @@ import {getElementUIThemeState} from "@/assets/css/CommonJs";
 const isDark = useDark()
 export default {
   name: 'SwitchThemes',
-  computed: {
-    InfoFilled() {
-      return InfoFilled
-    },
-    Search() {
-      return Search
-    },
-    Hide() {
-      return Hide
-    },
-    View() {
-      return View
-    }
-  },
   components: {TrendCharts, InfoFilled, Connection, Tools, Memo, Document},
   data() {
     return {
@@ -189,6 +172,7 @@ export default {
     handleSwitchThemesChange() {
       const toggleDark = useToggle(isDark);
       toggleDark();
+      this.$store.commit('theme/setThemeDark',this.themesDarkValue)
     }
   }
 }

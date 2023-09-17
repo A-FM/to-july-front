@@ -6,6 +6,6 @@ export function dataFormat(timestamp){
 export function getElementUIThemeState(){
     return localStorage.getItem('vueuse-color-scheme') !== null && localStorage.getItem('vueuse-color-scheme') !== "auto"
 }
-export function getMdEditThemeState(){
-    return getElementUIThemeState() ? 'light':'dark'
+export function getMdEditThemeState(isDark){
+    return isDark ? 'light':'dark'
 }
