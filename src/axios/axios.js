@@ -8,14 +8,16 @@ NProgress.configure({
 });
 
 instance.interceptors.request.use(config => {
-    config.url = `/server/${config.url}`;
-    config.timeout = 1000*600;
+    console.log(config.url)
+    if (!config.url.startsWith("http")) {
+        config.url = `/server/${config.url}`;
+    }
+    config.timeout = 1000 * 600;
 
     config.xsrfCookieName = "CSRF-TOKEN"
     config.xsrfHeaderName = "X-CSRF-TOKEN"
     config.withCredentials = true
     config.headers.setAuthorization(localStorage.getItem("token"))
-
     config.onUploadProgress = function (progressEvent) {
         NProgress.set(progressEvent.progress)
     };
@@ -25,7 +27,7 @@ instance.interceptors.request.use(config => {
     NProgress.start()
     return config;
 });
-instance.interceptors.response.use(response=>{
+instance.interceptors.response.use(response => {
     NProgress.done();
     return response
 }, error => {
